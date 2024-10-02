@@ -19,19 +19,28 @@ module.exports.handler = async (event) => {
     if (!data.Item || data.Item.password !== requestBody.password) {
       return {
         statusCode: 401,
-        body: JSON.stringify({ message: 'Invalid username or password' })
+        body: JSON.stringify({ message: 'Invalid username or password' }),
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
       };
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Login successful' })
+      body: JSON.stringify({ message: 'Login successful' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     };
   } catch (error) {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Internal server error' })
+      body: JSON.stringify({ message: 'Internal server error' }),
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
     };
   }
 };

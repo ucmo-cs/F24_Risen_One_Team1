@@ -8,19 +8,36 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   constructor(private http: HttpClient,private router: Router) { }
+  private url = 'https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/dev/login'
 
   login(username: string, password: string): Observable<boolean> {
-    // Your login logic with Lambda function
-    // Simulating success for demonstration purposes
-    const loginSuccess = true;
-    
+
     return new Observable<boolean>((observer) => {
-      if (loginSuccess) {
-        observer.next(true); // Notify subscribers that login was successful
-        observer.complete(); // Complete the observable
-      } else {
-        observer.error('Login failed'); // Notify subscribers that login failed
-      }
+      fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/dev/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      })
+        .then(response => {
+          console.log('Response' + response.json());
+          if(response.ok){
+            observer.next(true); // Notify subscribers that login was successful
+            observer.complete(); // Complete the observable
+            //this.router.navigate(['/home']);
+          }
+          else{
+            observer.error('Login failed'); // Notify subscribers that login failed
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          observer.error('Login failed'); // Notify subscribers that login failed
+        });
     });
   }
 
