@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   constructor(private http: HttpClient,private router: Router) { }
-  private url = 'https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/dev/login'
+  private url = 'https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/login'
 
   login(username: string, password: string): Observable<boolean> {
 
     const loginStatus = new Subject<boolean>();
 
-    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/dev/login', {
+    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,14 +27,12 @@ export class AuthService {
       .then(response => {
         console.log('Response' + response.json());
         if(response.ok){
-          return true;
-          //loginStatus.next(true); // Notify subscribers that login was successful
-          //loginStatus.complete(); // Complete the observable
-          //this.router.navigate(['/home']);
+          loginStatus.next(true); // Notify subscribers that login was successful
+          loginStatus.complete(); // Complete the observable
+          this.router.navigate(['/home']);
         }
-        else{
+        else{ // todo - figure out how to hard reload the page or display a login failed message
           loginStatus.error('Login failed'); // Notify subscribers that login failed
-          return false;
         }
       })
       .catch((error) => {
