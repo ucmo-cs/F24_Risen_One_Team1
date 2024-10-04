@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -44,7 +45,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
 
-import { FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule} from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs'
 import { AuthService } from '../auth.service';
@@ -61,37 +62,52 @@ interface previousRequest {
   providers: [provideNativeDateAdapter()],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  template: `
-  <input type="text" [(ngModel)]="username" placeholder="Username">
-  <input type="password" [(ngModel)]="password" placeholder="Password">
-  <button (click)="login()">Login</button>
-`
+  //template: `
+  // <input type="text" [(ngModel)]="username" placeholder="Username">
+  // <input type="password" [(ngModel)]="password" placeholder="Password">
+  // <button (click)="login()">Login</button>
+
 })
 export class LoginComponent {
-  username: string = ''; // Initialize with an empty string
-  password: string = ''; // Initialize with an empty string
-
-  constructor(private authService: AuthService, private router: Router) { }
-
-  login() {
-    this.authService.login(this.username, this.password)
-      .subscribe({
-        next: (success) => {
-          if (success) {
-            // Navigate to home component if login is successful
-            this.router.navigate(['/home']);
-          } else {
-            // Handle login failure
-            console.error('Login failed');
-          }
-        },
-        error: (error) => {
-          // Handle login error
-          console.error('Login error:', error);
-        }
-      });
+  // username: string = ''; // Initialize with an empty string
+  // password: string = ''; // Initialize with an empty string
+  loginForm!: FormGroup;
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router)
+  {
+    this.createForm();
   }
-}
+
+  createForm() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+    login()
+    {
+      if (this.loginForm.valid) {
+        const {username, password} = this.loginForm.value;
+        this.authService.login(username, password)
+          .subscribe({
+            next: (success) => {
+              if (success) {
+                // Navigate to home component if login is successful
+                this.router.navigate(['/home']);
+              } else {
+                // Handle login failure
+                console.error('Login failed');
+              }
+            },
+            error: (error) => {
+              // Handle login error
+              console.error('Login error:', error);
+            }
+          });
+      }
+    }
+  }
+
+
 
 
 
