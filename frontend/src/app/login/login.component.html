@@ -38,7 +38,7 @@
                                 <span>Risen One Consulting <span id="yellow">|</span> Employee Portal</span>
                             </h1>
                             <h2>Login</h2>
-                            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
                               <div class="form-group">
                                 <label for="username">Username:</label>
                                 <mat-form-field appearance="fill" class="form-field">
@@ -51,6 +51,8 @@
                                   <input matInput id="password" name="password" type="password" formControlName="password">
                                 </mat-form-field>
                               </div>
+                              <div *ngIf="errorMessage" class="error-message" style="text-align: center">{{ errorMessage }}</div>
+                              <br>
                               <button mat-raised-button color="primary" class="login-button" type="submit">Login</button>
                             </form>
                         </mat-card-content>

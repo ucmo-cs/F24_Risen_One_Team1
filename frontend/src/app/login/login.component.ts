@@ -20,7 +20,7 @@ interface previousRequest {
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
+  errorMessage: string = '';
   constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -36,10 +36,12 @@ export class LoginComponent {
             if (success) {
               this.router.navigate(['/home']);
             } else {
-              console.error('Login failed');
+              this.errorMessage = 'Incorrect login information, please try again';
+              console.error("Login failed")
             }
           },
           error: (error) => {
+            this.errorMessage = 'Login failed, please try again';
             console.error('Login error:', error);
           }
         });

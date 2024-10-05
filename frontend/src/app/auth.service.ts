@@ -33,11 +33,12 @@ export class AuthService {
         }
         else{ // todo - figure out how to hard reload the page or display a login failed message
           loginStatus.error('Login failed'); // Notify subscribers that login failed
+
         }
       })
       .catch((error) => {
         console.error('Error:', error);
-        loginStatus.error('Login failed'); // Notify subscribers that login failed
+        loginStatus.error('Incorrect login information, please try again'); // Notify subscribers that login failed
       });
 
     return loginStatus.asObservable();
