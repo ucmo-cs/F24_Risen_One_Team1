@@ -10,8 +10,6 @@ interface previousRequest {
   viewValue: string;
 }
 
-
-
 @Component({
   selector: 'app-login',
   providers: [provideNativeDateAdapter()],
@@ -34,6 +32,7 @@ export class LoginComponent {
         .subscribe({
           next: (success) => {
             if (success) {
+              localStorage.setItem('user', JSON.stringify({username: this.loginForm.value.username}));
               this.router.navigate(['/home']);
             } else {
               this.errorMessage = 'Incorrect login information, please try again';

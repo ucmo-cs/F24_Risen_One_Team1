@@ -29,11 +29,12 @@ export class AuthService {
         if(response.ok){
           loginStatus.next(true); // Notify subscribers that login was successful
           loginStatus.complete(); // Complete the observable
-          this.router.navigate(['/home']);
         }
-        else{ // todo - figure out how to hard reload the page or display a login failed message
+        else if(response.status === 401){
+          loginStatus.next(false); //notify subscribers that login failed but due to credentials
+        }
+        else{
           loginStatus.error('Login failed'); // Notify subscribers that login failed
-
         }
       })
       .catch((error) => {
@@ -43,33 +44,6 @@ export class AuthService {
 
     return loginStatus.asObservable();
 
-    // return new Observable<boolean>((observer) => {
-    //   fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/dev/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       username: username,
-    //       password: password,
-    //     }),
-    //   })
-    //     .then(response => {
-    //       console.log('Response' + response.json());
-    //       if(response.ok){
-    //         observer.next(true); // Notify subscribers that login was successful
-    //         observer.complete(); // Complete the observable
-    //         //this.router.navigate(['/home']);
-    //       }
-    //       else{
-    //         observer.error('Login failed'); // Notify subscribers that login failed
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error:', error);
-    //       observer.error('Login failed'); // Notify subscribers that login failed
-    //     });
-    // });
   }
 
   logout() {
@@ -79,10 +53,15 @@ export class AuthService {
 
     if (logoutSuccess) {
       // Redirect to login page or any other desired page
+      localStorage.removeItem('user');
       this.router.navigate(['/login']);
     } else {
       // Handle logout failure
       console.error('Logout failed');
     }
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('user') !== null;
   }
 }
