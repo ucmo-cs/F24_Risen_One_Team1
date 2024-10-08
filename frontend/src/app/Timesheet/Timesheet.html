@@ -5,6 +5,34 @@
   <title>Timesheet</title>
 </head>
 <body>
+<div class="timesheet-container">
+  <h2>Monthly Timesheet</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Hours Worked</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let day of TimesheetComponent">
+      <td>{{ day.date | date: 'MMM d, yyyy' }}</td>
+      <td>
+        <input type="number" [(ngModel)]="day.hoursWorked" placeholder="Hours" />
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="day.description" placeholder="Work Description" />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="total-hours">
+    <strong>Total Hours Worked: {{ calculateTotalHours() }}</strong>
+  </div>
+</div>
 
 </body>
 </html>
