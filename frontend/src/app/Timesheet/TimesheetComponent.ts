@@ -8,8 +8,8 @@ interface TimesheetDay {
 
 @Component({
   selector: 'app-timesheet',
-  templateUrl: './timesheet.component.html',
-  styleUrls: ['./timesheet.component.css']
+  templateUrl: './Timesheet.html',
+  styleUrls: ['./Timesheet.css']
 })
 export class TimesheetComponent implements OnInit {
 

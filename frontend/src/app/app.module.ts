@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TimesheetComponent } from './Timesheet/TimesheetComponent';
+
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -69,7 +70,6 @@ import { LoginComponent } from './login/login.component';
     ],
 
     exports: [],
-    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         LayoutModule,
@@ -119,6 +119,7 @@ import { LoginComponent } from './login/login.component';
     providers: [
         MatSnackBar,
         provideHttpClient(withInterceptorsFromDi()),
-    ]
+    ],
+    bootstrap: [AppComponent]
   })
   export class AppModule {}
