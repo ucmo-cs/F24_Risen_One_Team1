@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Timesheet} from "./Timesheet";
+//import {Timesheet} from "./Timesheet";
+
+
 
 @Component({
   selector: 'app-timesheet',
-  templateUrl: './timesheet.component.html',
+  templateUrl: './timesheet.html',
 })
 export class TimesheetComponent {
   timesheet = [

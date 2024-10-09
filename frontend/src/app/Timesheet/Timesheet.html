@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
   <meta charset="UTF-8">
   <title>Timesheet</title>
-</head>
 <body>
 <div class="timesheet-container">
   <h2>Monthly Timesheet</h2>
@@ -16,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let day of TimesheetComponent">
+    <tr *ngFor="let day of timesheet">
       <td>{{ day.date | date: 'MMM d, yyyy' }}</td>
       <td>
         <input type="number" [(ngModel)]="day.hoursWorked" placeholder="Hours" />
@@ -34,4 +31,4 @@
 </div>
 
 </body>
-</html>
+
