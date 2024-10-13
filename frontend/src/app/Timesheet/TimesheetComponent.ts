@@ -1,37 +1,49 @@
 import { Component, OnInit } from '@angular/core';
+import { Chart } from 'chart.js';
+import {provideCharts} from "ng2-charts";
 
-interface TimesheetDay {
-  date: Date;
-  hoursWorked: number;
-  description: string;
-}
 
 @Component({
-  selector: 'app-timesheet',
-  templateUrl: './Timesheet.html',
-  styleUrls: ['./Timesheet.css']
+  selector: 'app-timesheet', // Make sure this selector is unique in your app
+  templateUrl: './timesheet.component.html',
+  standalone: true,
+  // Point to the correct HTML file
+  styleUrls: ['./timesheet.component.css'] // Point to the correct CSS file (optional)
 })
 export class TimesheetComponent implements OnInit {
+  name: string = 'John Doe';
+  timesheet = [
+    { date: new Date(2024, 1, 1), hoursWorked: 0, description: '' },
+  ];
 
-  timesheet: TimesheetDay[] = [];
+  chart: any;
 
-  ngOnInit() {
-    this.generateTimesheetForMonth(new Date());  // Generate timesheet for current month
+  ngOnInit(): void {
+    this.createChart();
   }
 
-  generateTimesheetForMonth(currentDate: Date) {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
-    // Get the number of days in the month
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    // Generate the array of days
-    for (let day = 1; day <= daysInMonth; day++) {
-      this.timesheet.push({
-        date: new Date(year, month, day),
-        hoursWorked: 0, // default value
-        description: '' // default value
+  createChart() {
+    const ctx = document.getElementById('timesheetChart') as HTMLCanvasElement;
+    if (ctx) {
+      this.chart = new Chart(ctx.getContext('2d')!, {
+        type: 'bar',
+        data: {
+          labels: this.timesheet.map(day => day.date.getDate().toString()),
+          datasets: [{
+            label: 'Hours Worked',
+            data: this.timesheet.map(day => day.hoursWorked),
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
       });
     }
   }

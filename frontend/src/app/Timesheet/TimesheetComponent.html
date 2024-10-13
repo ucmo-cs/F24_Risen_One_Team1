@@ -1,22 +1,22 @@
-
-  <meta charset="UTF-8">
-  <title>Timesheet</title>
-<body>
 <div class="timesheet-container">
-  <h2>Monthly Timesheet</h2>
 
+  <h2>Timesheet for {{ name }}</h2>
+  <h3>{{ MatMonthView }}</h3>
+
+  <!-- Table for entering data -->
   <table>
     <thead>
     <tr>
       <th>Date</th>
       <th>Hours Worked</th>
+      <th>Description</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let day of timesheet">
       <td>{{ day.date | date: 'MMM d, yyyy' }}</td>
       <td>
-        <input type="number" [(ngModel)]="day.hoursWorked" placeholder="Hours" />
+        <input type="number" [(ngModel)]="day.hoursWorked" (change)="Chart" placeholder="Hours" />
       </td>
       <td>
         <input type="text" [(ngModel)]="day.description" placeholder="Work Description" />
@@ -25,10 +25,11 @@
     </tbody>
   </table>
 
+  <!-- Display total hours worked -->
   <div class="total-hours">
     <strong>Total Hours Worked: {{ calculateTotalHours() }}</strong>
   </div>
+
+  <!-- Chart for visualizing hours worked -->
+  <canvas id="timesheetChart"></canvas>
 </div>
-
-</body>
-
