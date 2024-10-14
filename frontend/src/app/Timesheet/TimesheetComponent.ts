@@ -1,19 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import {provideCharts} from "ng2-charts";
+import {MatMonthView} from "@angular/material/datepicker";
+import {DatePipe} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+//import { provideCharts } from 'ng2-charts';
 
 
 @Component({
   selector: 'app-timesheet', // Make sure this selector is unique in your app
-  templateUrl: './timesheet.component.html',
+  templateUrl: './TimesheetComponent.html',
   standalone: true,
+  imports: [
+    DatePipe,
+    FormsModule
+  ],
   // Point to the correct HTML file
-  styleUrls: ['./timesheet.component.css'] // Point to the correct CSS file (optional)
+  styleUrls: ['./Timesheet.css'] // Point to the correct CSS file (optional)
 })
 export class TimesheetComponent implements OnInit {
   name: string = 'John Doe';
-  timesheet = [
-    { date: new Date(2024, 1, 1), hoursWorked: 0, description: '' },
+  timesheet: { date: Date, hoursWorked: number, description: string }[] = [
+    { date: new Date(), hoursWorked: 0, description: '' }
   ];
 
   chart: any;
@@ -51,4 +58,7 @@ export class TimesheetComponent implements OnInit {
   calculateTotalHours(): number {
     return this.timesheet.reduce((total, day) => total + day.hoursWorked, 0);
   }
+
+  protected readonly MatMonthView = MatMonthView;
+  protected readonly Chart = Chart;
 }
