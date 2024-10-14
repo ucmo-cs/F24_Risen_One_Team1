@@ -7,10 +7,10 @@ module.exports.handler = async (event) => {
     const requestBody = JSON.parse(event.body);
 
     const params = {
-        TableName: 'project',
+        TableName: process.env.PROJECT_TABLE,
         Item: {
-            id: requestBody.projectId,
-            name: requestBody.projectName,
+            projectId: requestBody.projectId,
+            projectName: requestBody.projectName,
         }
     };
 
