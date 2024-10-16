@@ -8,8 +8,8 @@ module.exports.handler = async (event) => {
     const params = {
         TableName: process.env.PROJECT_TABLE,
         Key: {
-            projectId: docClient.get(),
-            projectName: docClient.get()
+            projectId: requestBody.projectId,
+            projectName: requestBody.projectName
         },
     };
 
