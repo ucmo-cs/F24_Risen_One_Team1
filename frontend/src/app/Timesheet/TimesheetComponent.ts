@@ -3,7 +3,6 @@ import { Chart } from 'chart.js';
 import {MatMonthView} from "@angular/material/datepicker";
 import {DatePipe} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-//import { provideCharts } from 'ng2-charts';
 
 
 @Component({
@@ -15,7 +14,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ],
   // Point to the correct HTML file
-  styleUrls: ['./Timesheet.css'] // Point to the correct CSS file (optional)
+  styleUrls: ['./Timesheet.css']
 })
 export class TimesheetComponent implements OnInit {
   name: string = 'John Doe';
@@ -31,6 +30,7 @@ export class TimesheetComponent implements OnInit {
 
   createChart() {
     const ctx = document.getElementById('timesheetChart') as HTMLCanvasElement;
+
     if (ctx) {
       this.chart = new Chart(ctx.getContext('2d')!, {
         type: 'bar',
@@ -39,8 +39,7 @@ export class TimesheetComponent implements OnInit {
           datasets: [{
             label: 'Hours Worked',
             data: this.timesheet.map(day => day.hoursWorked),
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            borderColor: 'black',
             borderWidth: 1
           }]
         },
