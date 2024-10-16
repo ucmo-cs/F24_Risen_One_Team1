@@ -58,6 +58,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app.routes';
 import { LoginComponent } from './login/login.component';
+import {Timesheet} from "./Timesheet/timesheet";
 
 @NgModule({
     declarations: [
@@ -66,7 +67,7 @@ import { LoginComponent } from './login/login.component';
       HomeComponent,
       SidenavComponent,
       LoginComponent,
-      AppComponent
+      AppComponent,
 
     ],
 

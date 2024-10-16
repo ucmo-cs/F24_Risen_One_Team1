@@ -6,7 +6,7 @@ import {FormsModule} from "@angular/forms";
 
 
 @Component({
-  selector: 'app-timesheet', // Make sure this selector is unique in your app
+  selector: 'app-timesheet',
   templateUrl: './TimesheetComponent.html',
   standalone: true,
   imports: [
