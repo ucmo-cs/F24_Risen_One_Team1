@@ -9,7 +9,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TimesheetComponent } from './Timesheet/TimesheetComponent';
+import { TimesheetComponent } from './Timesheet/timesheet';
+
+
+
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -66,7 +69,8 @@ import { LoginComponent } from './login/login.component';
       HomeComponent,
       SidenavComponent,
       LoginComponent,
-      AppComponent
+      AppComponent,
+      TimesheetComponent
 
     ],
 
@@ -116,8 +120,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    TimesheetComponent,
-    TimesheetComponent,
+
 
 
   ],

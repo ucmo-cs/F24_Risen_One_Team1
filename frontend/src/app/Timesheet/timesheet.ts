@@ -1,36 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import {Chart} from "chart.js";
-import {MatMonthView} from "@angular/material/datepicker";
-import {FormsModule} from "@angular/forms";
-import {DatePipe} from "@angular/common";
-//import {Timesheet} from "./Timesheet";
-
-
+import { Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-timesheet',
-  templateUrl: './TimesheetComponent.html',
-  imports: [
-    FormsModule,
-    DatePipe
-  ],
-  standalone: true
+  templateUrl: './timesheet.html',
+  styleUrls: ['./Timesheet.css']
 })
-export class Timesheet implements OnInit{
-  ngOnInit(): void {
-      throw new Error('Method not implemented.');
-  }
-  timesheet = [
-    { date: new Date(2024, 1, 1), hoursWorked: 0, description: '' },
-    // Add more days as needed
+export class TimesheetComponent {
+  employeeName: string = '';
+  selectedMonth: string = '';
+  months: string[] = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
+  days: string[] = [];
+  chartData: number[] = [];
 
-  calculateTotalHours() {
-    return this.timesheet.reduce((total, day) => total + day.hoursWorked, 0);
+  constructor() {
+    this.updateDays();
   }
 
+  updateDays() {
+    // Calculate the number of days in the selected month
+    const daysInMonth = new Date(2024, this.months.indexOf(this.selectedMonth) + 1, 0).getDate();
 
-  protected readonly name = name;
-  protected readonly MatMonthView = MatMonthView;
-  protected readonly Chart = Chart;
+    // Create an array of day numbers
+    this.days = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
+
+    // Reset the chart data to 0 for each day
+    this.chartData = Array(daysInMonth).fill(0);
+  }
+
+  validateInput(event: any) {
+    //  only numbers are entered in the input field
+    const value = event.target.value;
+    if (!/^\d*$/.test(value)) {
+      event.target.value = value.replace(/[^\d]/g, '');
+    }
+  }
 }
