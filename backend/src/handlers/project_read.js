@@ -13,11 +13,11 @@ module.exports.handler = async (event) => {
     };
 
     try{
-        await dynamoDB.get().promise();
+        const data = await dynamoDB.get(params).promise();
+        console.log("Success", data.Item);
         return{
             statusCode: 200,
-            console: log("Success", data.Item),
-            body: JSON.stringify({message: "Reading Successful"}),
+            body: JSON.stringify({message: "Reading Successful", data: data.Item}),
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true
