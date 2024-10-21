@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-timesheet',
-  templateUrl: './timesheet.html',
+  templateUrl: './TimesheetComponent.html',
   styleUrls: ['./Timesheet.css']
 })
 export class TimesheetComponent {
@@ -15,6 +15,7 @@ export class TimesheetComponent {
   ];
   days: string[] = [];
   chartData: number[] = [];
+  totalHours: number = 0;  // New variable to store total hours
 
   constructor() {
     this.updateDays();
@@ -29,6 +30,8 @@ export class TimesheetComponent {
 
     // Reset the chart data to 0 for each day
     this.chartData = Array(daysInMonth).fill(0);
+
+    this.updateTotalHours();
   }
 
   validateInput(event: any) {
@@ -37,5 +40,9 @@ export class TimesheetComponent {
     if (!/^\d*$/.test(value)) {
       event.target.value = value.replace(/[^\d]/g, '');
     }
+    this.updateTotalHours();
+  }
+  updateTotalHours() {
+    this.totalHours = this.chartData.reduce((sum, current) => sum + current, 0);
   }
 }
