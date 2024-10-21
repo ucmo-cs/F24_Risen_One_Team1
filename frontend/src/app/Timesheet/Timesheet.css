@@ -1,23 +1,115 @@
-.chart-container {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.header {
+  background-color: #f0eae5;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.timesheet {
+  background-color: #ffba00;
+  padding: 20px;
+}
+
+.timesheet h2 {
+  margin: 0;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.form-section {
+  margin: 20px 0;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  height: 300px;
+  justify-content: space-between;
+}
+
+.form-section select {
+  padding: 8px;
   border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
   padding: 10px;
+  text-align: center;
 }
 
-.day {
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+.actions {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 
-.bar {
-  width: 20px;
-  background-color: #3b82f6;
-  margin-bottom: 5px;
+.actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-html {
-  background-color: #FBC900;
+
+.save {
+  background-color: #ffba00;
+  color: #fff;
+}
+
+.edit {
+  background-color: #333;
+  color: #fff;
+}
+
+.export {
+  background-color: #ffba00;
+  color: #fff;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+#SignatureName {
+  text-align: center;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+#Signature {
+  width: 100%;
+  border-bottom: 1px solid black;
+  height: 30px;
 }
