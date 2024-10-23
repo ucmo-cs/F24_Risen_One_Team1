@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './TimesheetComponent.html',
   styleUrls: ['./Timesheet.css']
 })
+
 export class TimesheetComponent {
   employeeName: string = '';
   selectedMonth: string = '';
