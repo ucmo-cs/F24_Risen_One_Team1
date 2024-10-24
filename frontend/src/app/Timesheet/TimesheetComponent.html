@@ -1,32 +1,7 @@
-<table *ngIf="days.length > 0">
-  <thead>
-  <tr>
-    <th>Employee</th>
-    <th *ngFor="let day of days">Day {{ day }}</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>{{ employeeName }}</td>
-    <td *ngFor="let i of days; let index = index">
-      <input
-        type="number"
-        [(ngModel)]="chartData[index]"
-        (input)="validateInput($event)"
-        name="chartInput{{ index }}"
-        min="0" max="24" placeholder="Hours">
-    </td>
-  </tr>
-  </tbody>
-</table>
 
-<!-- New Stuff -->
 <div class="container">
   <div class="header">Monthly Timesheet</div>
-
   <div class="timesheet">
-    <div class="sub-header">Monthly Time Sheet</div>
-
     <div class="form-section">
       <label for="project">Project Name:</label>
       <select id="project">
