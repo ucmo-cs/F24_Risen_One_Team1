@@ -15,6 +15,8 @@
       <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="updateDays()">
         <option *ngFor="let month of months" [value]="month">{{ month }}</option>
       </select>
+      <br>
+      <label for="selectMonth" [(ngModel)]="selectedMonth"></label>
     </div>
 
     <div class="table-container">
