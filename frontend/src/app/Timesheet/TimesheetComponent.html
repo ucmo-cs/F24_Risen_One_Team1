@@ -1,19 +1,22 @@
 
 <div class="container">
   <div class="header">Monthly Timesheet</div>
+  <div class = "container"> Monthly Timesheet </div>
   <div class="timesheet">
     <div class="form-section">
       <label for="project">Project Name:</label>
       <select id="project">
         <option>BAERP</option>
-        <option></option>
-        <option></option>
+        <option>Project</option>
+        <option>Project 2</option>
       </select>
 
       <label for="selectMonth">Select Month:</label>
       <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="updateDays()">
         <option *ngFor="let month of months" [value]="month">{{ month }}</option>
       </select>
+      <br>
+      <label for="selectMonth"></label>
     </div>
 
     <div class="table-container">
@@ -21,7 +24,7 @@
         <thead>
         <tr>
           <th>Employees</th>
-          <th *ngFor="let day of days">Day {{ day }}</th>
+          <th *ngFor="let day of days"> {{ day }}</th>
           <th>Total</th>
         </tr>
         </thead>
@@ -49,6 +52,8 @@
       <button class="edit">Edit</button>
       <button class="save">Save</button>
     </div>
+    <br>
+    <br>
 
     <div class="footer">
       <div>Signature</div>

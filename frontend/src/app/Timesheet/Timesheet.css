@@ -13,7 +13,7 @@
 }
 
 .timesheet {
-  background-color: #ffba00;
+  background-color: white;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -28,11 +28,15 @@
 table th {
   background-color: #000;
   color: white;
+  text-align: center;
+  padding:10px;
 }
 
 table td {
   font-size: 16px;
   background-color: white;
+  text-align: center;
+  padding: 10px;
 }
 
 /* Buttons */
@@ -60,8 +64,11 @@ table td {
 /* Footer signature */
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 20px;
   border-top: 1px solid black;
   margin-top: 20px;
+}
+div{
+  text-align: center;
 }
