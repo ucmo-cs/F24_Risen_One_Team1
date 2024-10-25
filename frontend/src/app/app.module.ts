@@ -9,6 +9,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TimesheetComponent } from './Timesheet/timesheet';
+
+
+
+
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -32,6 +37,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatNativeDateModule } from '@angular/material/core';
 // Material Buttons & Indicators
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -63,59 +69,65 @@ import { LoginComponent } from './login/login.component';
       HomeComponent,
       SidenavComponent,
       LoginComponent,
-      AppComponent
+      AppComponent,
+      TimesheetComponent
+
     ],
+
     exports: [],
-    bootstrap: [AppComponent],
-    imports: [
-        BrowserModule,
-        LayoutModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        CommonModule,
-        MatAutocompleteModule,
-        MatCheckboxModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatMenuModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatCardModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatListModule,
-        MatStepperModule,
-        MatTabsModule,
-        MatTreeModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatBadgeModule,
-        MatChipsModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatProgressBarModule,
-        MatRippleModule,
-        MatBottomSheetModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatTableModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-    ],
+  imports: [
+    BrowserModule,
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatListModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatTreeModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatBadgeModule,
+    MatChipsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatRippleModule,
+    MatBottomSheetModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+
+
+
+  ],
     providers: [
         MatSnackBar,
         provideHttpClient(withInterceptorsFromDi()),
-    ]
+    ],
+    bootstrap: [AppComponent]
   })
   export class AppModule {}

@@ -1,0 +1,67 @@
+.header {
+  background-color: #f4ede9;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: #333;
+}
+
+
+.container {
+  background-color: #f4ede9;
+}
+
+.timesheet {
+  background-color: #ffba00;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+table th {
+  background-color: #000;
+  color: white;
+}
+
+table td {
+  font-size: 16px;
+  background-color: white;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.actions button {
+  background-color: #ffba00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.actions button:hover {
+  opacity: 0.8;
+}
+
+/* Footer signature */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-top: 1px solid black;
+  margin-top: 20px;
+}

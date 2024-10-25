@@ -1,0 +1,58 @@
+
+<div class="container">
+  <div class="header">Monthly Timesheet</div>
+  <div class="timesheet">
+    <div class="form-section">
+      <label for="project">Project Name:</label>
+      <select id="project">
+        <option>BAERP</option>
+        <option></option>
+        <option></option>
+      </select>
+
+      <label for="selectMonth">Select Month:</label>
+      <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="updateDays()">
+        <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+      </select>
+    </div>
+
+    <div class="table-container">
+      <table *ngIf="days.length > 0">
+        <thead>
+        <tr>
+          <th>Employees</th>
+          <th *ngFor="let day of days">Day {{ day }}</th>
+          <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{ employeeName }}</td>
+          <td *ngFor="let i of days; let index = index">
+            <input
+              type="number"
+              [(ngModel)]="chartData[index]"
+              (input)="validateInput($event)"
+              name="chartInput{{ index }}"
+              min="0"
+              max="24"
+              placeholder="Hours">
+          </td>
+          <td>{{ totalHours }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="export">Export to PDF</button>
+      <button class="edit">Edit</button>
+      <button class="save">Save</button>
+    </div>
+
+    <div class="footer">
+      <div>Signature</div>
+      <div>Date</div>
+    </div>
+  </div>
+</div>
