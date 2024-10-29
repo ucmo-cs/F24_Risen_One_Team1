@@ -1,22 +1,37 @@
 
 <div class="container">
   <div class="header">Monthly Timesheet</div>
-  <div class = "container"> Monthly Timesheet </div>
   <div class="timesheet">
     <div class="form-section">
+      <div class = "container"><strong>Monthly Timesheet</strong> </div>
+      <br>
+      <br>
+      <br>
+      <div class = "project">
       <label for="project">Project Name:</label>
       <select id="project">
         <option>BAERP</option>
         <option>Project</option>
         <option>Project 2</option>
+
       </select>
 
       <label for="selectMonth">Select Month:</label>
       <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="updateDays()">
         <option *ngFor="let month of months" [value]="month">{{ month }}</option>
       </select>
+      <div class="actions">
+        <button (click)="exportToExcel()">Export to Excel</button>
+        <button class="edit">Edit</button>
+        <button class="save">Save</button>
+      </div>
       <br>
-      <label for="selectMonth"></label>
+      <br>
+      </div>
+      <div>
+
+        <strong>Selected Month:</strong> {{ selectedMonth ? selectedMonth : 'None selected' }}
+      </div>
     </div>
 
     <div class="table-container">
@@ -47,17 +62,13 @@
       </table>
     </div>
 
-    <div class="actions">
-      <button (click)="exportToExcel()">Export to Excel</button>
-      <button class="edit">Edit</button>
-      <button class="save">Save</button>
-    </div>
     <br>
     <br>
 
     <div class="footer">
-      <div>Signature</div>
-      <div>Date</div>
+      <div class="sign">
+        Signature:<span></span>Date:<span></span>
+      </div>
     </div>
   </div>
 </div>

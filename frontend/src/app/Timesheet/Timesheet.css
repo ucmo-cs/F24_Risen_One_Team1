@@ -5,31 +5,47 @@
   font-weight: bold;
   font-size: 24px;
   color: #333;
+  border: #f4ede9;
+
+}
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f0ec;
 }
 
 
 .container {
-  background-color: #f4ede9;
+  background-color: #ffffff;
+  text-align: center;
 }
 
 .timesheet {
-  background-color: white;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
+
 }
 
 .table-container {
   overflow-x: auto;
   margin-top: 10px;
+
 }
+.project{
+  justify-content: space-evenly;
+}
+
 
 table th {
   background-color: #000;
   color: white;
   text-align: center;
   padding:10px;
+
 }
 
 table td {
@@ -37,12 +53,13 @@ table td {
   background-color: white;
   text-align: center;
   padding: 10px;
+
 }
 
 /* Buttons */
 .actions {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   margin: 20px 0;
 }
 
@@ -62,13 +79,13 @@ table td {
 }
 
 /* Footer signature */
-.footer {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 20px;
-  border-top: 1px solid black;
-  margin-top: 20px;
+.sign {
+  font-weight: bold;
 }
-div{
+.sign span {
+  width: 4cm;
+  border-bottom: 0.1em solid #000;
+  display: inline-block;
+  margin-right: 18px;
   text-align: center;
 }

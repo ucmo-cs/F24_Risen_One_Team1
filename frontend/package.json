@@ -20,9 +20,11 @@
     "@angular/platform-browser-dynamic": "^18.2.3",
     "@angular/router": "^18.2.3",
     "chart.js": "^4.4.5",
+    "file-saver": "^2.0.5",
     "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
