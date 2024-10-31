@@ -4,6 +4,11 @@ import * as XLSX from 'xlsx';
 //import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+interface Employee {
+  name: string;
+  hours: number[];
+  totalHours: number;
+}
 @Component({
   selector: 'app-timesheet',
   templateUrl: './TimesheetComponent.html',
@@ -23,6 +28,12 @@ export class TimesheetComponent {
   chartData: number[] = [];
   totalHours: number = 0;  // New variable to store total hours
 
+  employees: Employee[] = [
+    { name: 'Jane Doe', hours: [], totalHours: 0 },
+    { name: 'John Doe', hours: [], totalHours: 0 },
+    { name: 'Michael Smith', hours: [], totalHours: 0 }
+  ];
+
   constructor() {
     this.updateDays();
   }
@@ -38,6 +49,11 @@ export class TimesheetComponent {
     this.chartData = Array(daysInMonth).fill(0);
 
     this.updateTotalHours();
+
+    this.employees.forEach(employee => {
+      employee.hours = Array(daysInMonth).fill(0);
+      employee.totalHours = 0;
+    });
   }
 
 
@@ -52,6 +68,9 @@ export class TimesheetComponent {
 
   updateTotalHours() {
     this.totalHours = this.chartData.reduce((sum, current) => sum + current, 0);
+    this.employees.forEach(employee => {
+      employee.totalHours = employee.hours.reduce((sum, current) => sum + current, 0);
+    });
   }
 
   exportToExcel() {

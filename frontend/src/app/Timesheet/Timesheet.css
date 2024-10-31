@@ -58,9 +58,11 @@ table td {
 
 /* Buttons */
 .actions {
+  position: absolute;
+  top: 305px;
+  right: 20px;
   display: flex;
-  justify-content: right;
-  margin: 20px 0;
+  gap: 10px;
 }
 
 .actions button {
@@ -79,13 +81,39 @@ table td {
 }
 
 /* Footer signature */
+.footer {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  padding-left: 10px; /* Adjust padding as needed for spacing from the edge */
+}
+
 .sign {
+  display: flex;
+  gap: 40px;
   font-weight: bold;
 }
 .sign span {
-  width: 4cm;
+  width: 150px;
   border-bottom: 0.1em solid #000;
   display: inline-block;
   margin-right: 18px;
   text-align: center;
+}
+
+.project-fields {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the left */
+  gap: 20px; /* Controls space between Project Name and Select Month */
+  padding-left: 20px; /* Adds some space from the left edge */
+}
+
+.project-fields label {
+  font-weight: normal;
+  margin-right: 5px; /* Adds a small space between label and select */
+}
+
+.project-fields select {
+  padding: 5px;
+  font-size: 14px;
 }
