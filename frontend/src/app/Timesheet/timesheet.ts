@@ -3,6 +3,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+
 interface Employee {
   name: string;
   hours: number[];
@@ -88,9 +91,15 @@ export class TimesheetComponent {
       type: 'array'
     });
 
-        this['saveAsExcelFile'](excelBuffer, 'exported-data');
+    const data: Blob = new Blob([excelBuffer], { type: EXCEL_TYPE });
+    const url = window.URL.createObjectURL(data);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'exported-data_' + new Date().getTime() + EXCEL_EXTENSION;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
-
 
    saveData() {
     if (this['timesheet'].valid) {
