@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
-//import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 interface Employee {
@@ -93,19 +92,15 @@ export class TimesheetComponent {
   }
 
 
-  onSave() {
+   saveData() {
     if (this['timesheet'].valid) {
       // Get the form values
       const formData = this['timesheet'].value;
-
+      console.log("Data saved Successfully");
 
       this.saveData(formData);
     } else {
       console.log('Form is invalid');
     }
-  }
-
-  saveData(data: any) {
-    console.log('Saved data:', data);
   }
 }

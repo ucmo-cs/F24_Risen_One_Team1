@@ -62,12 +62,14 @@ table td {
 }
 
 /* Footer signature */
-.footer {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 20px;
-  border-top: 1px solid black;
-  margin-top: 20px;
+.sign {
+  font-weight: bold;
+}
+.sign span {
+  width: 4cm;
+  border-bottom: 0.1em solid #000;
+  display: inline-block;
+  margin-right: 18px;
 }
 div{
   text-align: center;
