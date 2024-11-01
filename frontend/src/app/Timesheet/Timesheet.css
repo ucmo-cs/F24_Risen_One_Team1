@@ -15,7 +15,6 @@ body {
   background-color: #f5f0ec;
 }
 
-
 .container {
   background-color: #ffffff;
   text-align: center;
@@ -27,7 +26,6 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
-
 }
 
 .table-container {
@@ -100,6 +98,7 @@ table td {
   text-align: center;
 }
 
+/*New stuff*/
 .project-fields {
   display: flex;
   align-items: center;
