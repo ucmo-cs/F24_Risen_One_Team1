@@ -4,22 +4,22 @@ const AWS = require("aws-sdk");
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = async (event) => {
-    const params = new AWS.DynamoDB.BatchGetCommand({
-        RequestItems: {
-            projects: {
-                ProjectionExpression: "projectId, projectName"
-            }
-        }
-    });
-
-
+    const params = {
+        TableName: process.env.PROJECT_TABLE,
+        ProjectionExpression: 'projectId, projectName'
+    };
 
     try{
-        const data = await dynamoDB.send(params).promise();
-        console.log("Retrieved Data", data.projects);
+        const data = await dynamoDB.scan(params).promise();
+        const projects = data.Items.map(item => ({
+            projectId: item.projectId,
+            projectName: item.projectName
+        }));
+
         return{
             statusCode: 200,
-            body: JSON.stringify({message: "Reading Successful", data: data.projects}),
+            body: JSON.stringify({message: "Reading Successful",
+                data: projects}),
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true
