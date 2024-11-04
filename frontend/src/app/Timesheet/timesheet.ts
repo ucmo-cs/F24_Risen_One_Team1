@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -8,80 +9,128 @@ const EXCEL_EXTENSION = '.xlsx';
 
 interface Employee {
   name: string;
-  hours: number[];
+  userId: number;
+  time: number[];
   totalHours: number;
 }
+interface Project {
+  projectName: string;
+  projectId: number;
+}
+
 @Component({
   selector: 'app-timesheet',
   templateUrl: './TimesheetComponent.html',
   styleUrls: ['./Timesheet.css']
 })
-
-export class TimesheetComponent {
-  [x: string]: any;
-
-  employeeName: string = '';
-  selectedMonth: string = '';
-  months: string[] = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+export class TimesheetComponent implements OnInit {
+  projects: Project[] = [];
+  employees: Employee[] = [];
   days: string[] = [];
-  chartData: number[] = [];
-  totalHours: number = 0;  // New variable to store total hours
+  monthInt: number = 0;
+  selectedMonth: string = '';
+  selectedYear: string = '2024'; // Default year
+  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  employees: Employee[] = [
-    { name: 'Jane Doe', hours: [], totalHours: 0 },
-    { name: 'John Doe', hours: [], totalHours: 0 },
-    { name: 'Michael Smith', hours: [], totalHours: 0 }
-  ];
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    this.updateDays();
+  ngOnInit() {
+    //this.fetchData();
+  }
+
+  fetchData() {
+    switch(this.selectedMonth) {
+      case 'January':
+        this.monthInt = 1;
+        break;
+      case 'February':
+        this.monthInt = 2;
+        break;
+      case 'March':
+        this.monthInt = 3;
+        break;
+      case 'April':
+        this.monthInt = 4;
+        break;
+      case 'May':
+        this.monthInt = 5;
+        break;
+      case 'June':
+        this.monthInt = 6;
+        break;
+      case 'July':
+        this.monthInt = 7;
+        break;
+      case 'August':
+        this.monthInt = 8;
+        break;
+      case 'September':
+        this.monthInt = 9;
+        break;
+      case 'October':
+        this.monthInt = 10;
+        break;
+      case 'November':
+        this.monthInt = 11;
+        break;
+      case 'December':
+        this.monthInt = 12;
+        break;
+      default:
+        this.monthInt = 0;
+    }
+
+    const body = { projectId: 111 };
+
+    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/readDB', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+      mode: 'cors',
+    })
+      .then(response => response.json())
+      .then(data => {
+        const timesheetData = data.data.year[this.selectedYear][this.monthInt];
+        this.employees = timesheetData.map((employee: any) => ({
+          ...employee,
+          totalHours: employee.time.reduce((sum: number, hours: number) => sum + hours, 0)
+        }));
+        this.updateDays();
+      })
+      .catch(error => {
+        console.error('Error fetching data', error);
+      });
   }
 
   updateDays() {
-    // Calculate the number of days in the selected month
-    const daysInMonth = new Date(2024, this.months.indexOf(this.selectedMonth) + 1, 0).getDate();
-
-    // Create an array of day numbers
-    this.days = Array.from({length: daysInMonth}, (_, i) => `${i + 1}`);
-
-    // Reset the chart data to 0 for each day
-    this.chartData = Array(daysInMonth).fill(0);
-
-    this.updateTotalHours();
-
-    this.employees.forEach(employee => {
-      employee.hours = Array(daysInMonth).fill(0);
-      employee.totalHours = 0;
-    });
+    const daysInMonth = new Date(parseInt(this.selectedYear), this.monthInt, 0).getDate();
+    this.days = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
   }
 
-
-  validateInput(event: any) {
-    //  only numbers are entered in the input field
+  validateInput(event: any, employeeIndex: number, dayIndex: number) {
     const value = event.target.value;
     if (!/^\d*$/.test(value)) {
       event.target.value = value.replace(/[^\d]/g, '');
     }
+    this.employees[employeeIndex].time[dayIndex] = +event.target.value;
     this.updateTotalHours();
   }
 
   updateTotalHours() {
-    this.totalHours = this.chartData.reduce((sum, current) => sum + current, 0);
     this.employees.forEach(employee => {
-      employee.totalHours = employee.hours.reduce((sum, current) => sum + current, 0);
+      employee.totalHours = employee.time.reduce((sum, current) => sum + current, 0);
     });
   }
 
   exportToExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
-      ['Employee Name:', this.employeeName],
+      ['Employee Name:', ...this.employees.map(emp => emp.name)],
       ['Month:', this.selectedMonth],
       ['Days:', ...this.days],
-      ['Hours:', ...this.chartData],
-      ['Total Hours:', this.totalHours]
+      ...this.employees.map(emp => ['Hours:', ...emp.time]),
+      ['Total Hours:', ...this.employees.map(emp => emp.totalHours)]
     ]);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Timesheet');
@@ -101,15 +150,7 @@ export class TimesheetComponent {
     document.body.removeChild(a);
   }
 
-   saveData() {
-    if (this['timesheet'].valid) {
-      // Get the form values
-      const formData = this['timesheet'].value;
-      console.log("Data saved Successfully");
-
-      // this.saveData(formData);
-    } else {
-      console.log('Form is invalid');
-    }
+  saveData() {
+    console.log("Data saved successfully");
   }
 }

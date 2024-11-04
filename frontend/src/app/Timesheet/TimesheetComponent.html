@@ -1,38 +1,33 @@
-
 <div class="container">
   <div class="header">Monthly Timesheet</div>
 
   <div class="timesheet">
     <div class="form-section">
-      <div class = "container"><strong>Monthly Timesheet</strong> </div>
+      <div class="container"><strong>Monthly Timesheet</strong></div>
 
       <div class="actions">
         <button (click)="exportToExcel()">Export to Excel</button>
         <button class="edit">Edit</button>
-        <button (click) ="saveData">Save</button>
+        <button (click)="saveData()">Save</button>
       </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
       <div class="project-fields">
-      <div class = "project">
-      <label for="project">Project Name:</label>
-      <select id="project">
-        <option>BAERP</option>
-        <option>Project</option>
-        <option>Project 2</option>
+        <div class="project">
+          <label for="project">Project Name:</label>
+          <select id="project">
+            <option>BAERP</option>
+            <option>Project</option>
+            <option>Project 2</option>
+          </select>
 
-      </select>
-
-      <label for="selectMonth">Select Month:</label>
-      <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="updateDays()">
-        <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-      </select>
-      </div>
-      <br>
-      <br>
+          <label for="selectMonth">Select Month:</label>
+          <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="fetchData()">
+            <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+          </select>
+        </div>
+        <br><br>
       </div>
 
       <div>
@@ -45,18 +40,18 @@
         <thead>
         <tr>
           <th>Employees</th>
-          <th *ngFor="let day of days"> {{ day }}</th>
+          <th *ngFor="let day of days">{{ day }}</th>
           <th>Total</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let employee of employees">
+        <tr *ngFor="let employee of employees; let employeeIndex = index">
           <td>{{ employee.name }}</td>
-          <td *ngFor="let i of days; let index = index">
+          <td *ngFor="let day of days; let dayIndex = index">
             <input
               type="number"
-              [(ngModel)]="employee.hours[index]"
-              (input)="updateTotalHours()"
+              [(ngModel)]="employee.time[dayIndex]"
+              (input)="validateInput($event, employeeIndex, dayIndex)"
               min="0"
               max="24"
               placeholder="Hours">
@@ -67,8 +62,7 @@
       </table>
     </div>
 
-    <br>
-    <br>
+    <br><br>
 
     <div class="footer">
       <div class="sign">
