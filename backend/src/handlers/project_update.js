@@ -14,9 +14,9 @@ module.exports.handler = async (event) => {
         Key: {
             projectId: requestBody.projectId
         },
-        UpdateExpression: "set #yr.#mo[0].time[0] = :time",
+        UpdateExpression: "set years.#yr.#mo[0].time[0] = :time",
         ExpressionAttributeNames: {
-            "#yr": "year",
+            "#yr": "2024",
             "#mo": "10"
         },
         ExpressionAttributeValues: {
