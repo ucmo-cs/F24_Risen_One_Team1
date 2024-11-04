@@ -50,7 +50,7 @@
           <td *ngFor="let day of days; let dayIndex = index">
             <input
               type="number"
-              [(ngModel)]="employee.time[dayIndex]"
+              [(ngModel)]="employee.times[dayIndex]"
               (input)="validateInput($event, employeeIndex, dayIndex)"
               min="0"
               max="24"

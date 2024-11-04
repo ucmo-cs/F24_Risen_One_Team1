@@ -10,7 +10,7 @@ const EXCEL_EXTENSION = '.xlsx';
 interface Employee {
   name: string;
   userId: number;
-  time: number[];
+  times: number[];
   totalHours: number;
 }
 interface Project {
@@ -92,10 +92,10 @@ export class TimesheetComponent implements OnInit {
     })
       .then(response => response.json())
       .then(data => {
-        const timesheetData = data.data.year[this.selectedYear][this.monthInt];
+        const timesheetData = data.data.years[this.selectedYear][this.monthInt];
+        console.log(timesheetData);
         this.employees = timesheetData.map((employee: any) => ({
-          ...employee,
-          totalHours: employee.time.reduce((sum: number, hours: number) => sum + hours, 0)
+          ...employee//totalHours: employee.times.reduce((sum: number, hours: number) => sum + hours, 0)
         }));
         this.updateDays();
       })
@@ -114,13 +114,13 @@ export class TimesheetComponent implements OnInit {
     if (!/^\d*$/.test(value)) {
       event.target.value = value.replace(/[^\d]/g, '');
     }
-    this.employees[employeeIndex].time[dayIndex] = +event.target.value;
+    this.employees[employeeIndex].times[dayIndex] = +event.target.value;
     this.updateTotalHours();
   }
 
   updateTotalHours() {
     this.employees.forEach(employee => {
-      employee.totalHours = employee.time.reduce((sum, current) => sum + current, 0);
+      employee.totalHours = employee.times.reduce((sum, current) => sum + current, 0);
     });
   }
 
@@ -129,7 +129,7 @@ export class TimesheetComponent implements OnInit {
       ['Employee Name:', ...this.employees.map(emp => emp.name)],
       ['Month:', this.selectedMonth],
       ['Days:', ...this.days],
-      ...this.employees.map(emp => ['Hours:', ...emp.time]),
+      ...this.employees.map(emp => ['Hours:', ...emp.times]),
       ['Total Hours:', ...this.employees.map(emp => emp.totalHours)]
     ]);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
