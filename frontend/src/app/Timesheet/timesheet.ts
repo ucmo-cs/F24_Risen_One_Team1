@@ -95,7 +95,8 @@ export class TimesheetComponent implements OnInit {
         const timesheetData = data.data.years[this.selectedYear][this.monthInt];
         console.log(timesheetData);
         this.employees = timesheetData.map((employee: any) => ({
-          ...employee//totalHours: employee.times.reduce((sum: number, hours: number) => sum + hours, 0)
+          ...employee,
+          totalHours: employee.times.reduce((sum: number, hours: number) => sum + hours, 0)
         }));
         this.updateDays();
       })
