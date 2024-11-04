@@ -14,13 +14,13 @@ module.exports.handler = async (event) => {
         Key: {
             projectId: requestBody.projectId
         },
-        UpdateExpression: "set years.#yr.#mo[0].time[0] = :time",
+        UpdateExpression: "set years.#yr.#mo[0].times[0] = :times",
         ExpressionAttributeNames: {
             "#yr": "2024",
             "#mo": "10"
         },
         ExpressionAttributeValues: {
-            ":time": 4
+            ":times": 4
         },
         ReturnValues: "ALL_NEW"
     });
