@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
 
 interface Employee {
   name: string;
@@ -34,7 +32,8 @@ export class TimesheetComponent implements OnInit {
   selectedYear: string = '2024'; // Default year
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.fetchProjects();
@@ -60,7 +59,7 @@ export class TimesheetComponent implements OnInit {
 
 
   fetchData() {
-    switch(this.selectedMonth) {
+    switch (this.selectedMonth) {
       case 'January':
         this.monthInt = 1;
         break;
@@ -101,7 +100,7 @@ export class TimesheetComponent implements OnInit {
         this.monthInt = 0;
     }
 
-    const body = { projectId: 111 };
+    const body = {projectId: 111};
 
     fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/readDB', {
       method: 'POST',
@@ -136,7 +135,7 @@ export class TimesheetComponent implements OnInit {
 
   updateDays() {
     const daysInMonth = new Date(parseInt(this.selectedYear), this.monthInt, 0).getDate();
-    this.days = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
+    this.days = Array.from({length: daysInMonth}, (_, i) => `${i + 1}`);
   }
 
   validateInput(event: any, employeeIndex: number, dayIndex: number) {
@@ -154,32 +153,41 @@ export class TimesheetComponent implements OnInit {
     });
   }
 
-  exportToExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
-      ['Employee Name:', ...this.employees.map(emp => emp.name)],
-      ['Month:', this.selectedMonth],
-      ['Days:', ...this.days],
-      ...this.employees.map(emp => ['Hours:', ...emp.times]),
-      ['Total Hours:', ...this.employees.map(emp => emp.totalHours)]
-    ]);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Timesheet');
+  exportToPDF() {
+    const pdf = new jsPDF('p', 'mm', 'a4');
 
-    const excelBuffer: any = XLSX.write(wb, {
-      bookType: 'xlsx',
-      type: 'array'
-    });
+    // Add title
+    pdf.setFontSize(20);
+    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 10, 10);
 
-    const data: Blob = new Blob([excelBuffer], { type: EXCEL_TYPE });
-    const url = window.URL.createObjectURL(data);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'exported-data_' + new Date().getTime() + EXCEL_EXTENSION;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+    // Add project name
+    pdf.setFontSize(14);
+    pdf.text('Project: ' + this.selectedProjectName, 10, 20);
+    let startY = 30;
+    startY += 10;
+    // Add table header
+    pdf.setFontSize(12);
+    let row = ['Employee Name', ...this.days, 'Total Hours'];
+    let colWidth = pdf.internal.pageSize.getWidth() / (row.length + 1);
+    pdf.text(row, 10, startY);
 
+    // Move to the next line
+    startY += 20;
+
+    // Add employee data
+    this.employees.forEach(employee => {
+        let employeeData = [
+          employee.name,
+          ...employee.times.map(time => time.toString()),
+          employee.totalHours.toString()
+        ];
+        pdf.text(employeeData, 10, startY);
+        startY += 10;
+            pdf.save(`Timesheet_${this.selectedMonth}_${this.selectedYear}.pdf`);
+            console.log('PDF saved');
+          }
+          ,)
+      }
   saveData() {
     console.log("Data saved successfully");
   }

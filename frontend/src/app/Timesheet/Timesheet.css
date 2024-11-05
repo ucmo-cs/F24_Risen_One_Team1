@@ -57,9 +57,7 @@ table td {
 /* Buttons */
 .actions {
   position: absolute;
-  top: 305px;
-  right: 10px;
-  display: flex;
+  display: inline;
   gap: 10px;
 }
 
@@ -72,6 +70,7 @@ table td {
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  display: inline;
 }
 
 .actions button:hover {
