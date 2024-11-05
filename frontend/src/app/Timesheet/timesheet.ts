@@ -174,6 +174,7 @@ export class TimesheetComponent implements OnInit {
     // Move to the next line
     startY += 20;
 
+
     // Add employee data
     this.employees.forEach(employee => {
         let employeeData = [
