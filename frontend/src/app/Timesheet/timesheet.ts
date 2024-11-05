@@ -28,6 +28,8 @@ export class TimesheetComponent implements OnInit {
   employees: Employee[] = [];
   days: string[] = [];
   monthInt: number = 0;
+  selectedProjectName: string = '';
+  selectedProjectID: number = 0;
   selectedMonth: string = '';
   selectedYear: string = '2024'; // Default year
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -35,8 +37,27 @@ export class TimesheetComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    //this.fetchData();
+    this.fetchProjects();
   }
+
+  fetchProjects() {
+    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/getAllProjects', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.projects = data.data;
+        console.log(this.projects);
+      })
+      .catch(error => {
+        console.error('Error fetching data', error);
+      });
+  }
+
 
   fetchData() {
     switch(this.selectedMonth) {
@@ -103,6 +124,14 @@ export class TimesheetComponent implements OnInit {
       .catch(error => {
         console.error('Error fetching data', error);
       });
+  }
+
+  onProjectChange(projectID: number) {
+    const selectedProject = this.projects.find(project => project.projectId === projectID);
+    if (selectedProject) {
+      this.selectedProjectName = selectedProject.projectName;
+      this.selectedProjectID = selectedProject.projectId;
+    }
   }
 
   updateDays() {

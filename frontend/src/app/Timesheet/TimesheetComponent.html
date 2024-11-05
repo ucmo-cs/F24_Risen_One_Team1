@@ -16,10 +16,8 @@
       <div class="project-fields">
         <div class="project">
           <label for="project">Project Name:</label>
-          <select id="project">
-            <option>BAERP</option>
-            <option>Project</option>
-            <option>Project 2</option>
+          <select id="project" [(ngModel)]="selectedProjectID" (ngModelChange)="onProjectChange($event)">
+            <option *ngFor="let project of projects" [value]="project.projectId">{{ project.projectName }}</option>
           </select>
 
           <label for="selectMonth">Select Month:</label>
