@@ -158,37 +158,56 @@ export class TimesheetComponent implements OnInit {
 
     // Add title
     pdf.setFontSize(20);
-    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 20, 20);
+    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 20, 10);
 
     // Add project name
     pdf.setFontSize(14);
-    pdf.text('Project: ' + this.selectedProjectName, 30, 30);
-    let startY = 30;
-    startY += 10;
-    // Add table header
-    pdf.setFontSize(12);
-    let row = ['Employee Name', ...this.days, 'Total Hours'];
-    let colWidth = pdf.internal.pageSize.getWidth() / (row.length + 1);
-    pdf.text(row, colWidth, startY);
+    pdf.text('Project: ' + this.selectedProjectName, 20, 20);
 
-    // Move to the next line
-    startY += 20;
+    // Set starting position for the table
+    let startY = 30
+    const rowHeight = 5;
+    const colWidth = 5;
 
-    // Add employee data
-    this.employees.forEach(employee => {
-        let employeeData = [
-          employee.name,
-          ...employee.times.map(time => time.toString()),
-          employee.totalHours.toString()
-        ];
-        pdf.text(employeeData, 10, startY);
-        startY += 10;
-            console.log('PDF saved');
-          }
-          ,)
+    // Add table headers
+    pdf.setFontSize(10);
+    pdf.text('Name', 20, startY);
+    this.days.forEach((day, index) => {
+      pdf.text(day, 40 + index * colWidth, startY);
+    });
+    pdf.text('Total', 40 + this.days.length * colWidth, startY);
+
+    // Draw header borders
+    pdf.rect(20, startY - rowHeight, colWidth * 2, rowHeight);
+    this.days.forEach((_, index) => {
+      pdf.rect(40 + index * colWidth, startY - rowHeight, colWidth, rowHeight);
+    });
+    pdf.rect(40 + this.days.length * colWidth, startY - rowHeight, colWidth, rowHeight);
+
+
+    // Add table data
+    this.employees.forEach((employee, rowIndex) => {
+      const rowY = startY + (rowIndex + 1) * rowHeight;
+      pdf.text(employee.name, 20, rowY);
+      employee.times.forEach((time, colIndex) => {
+        pdf.text(time.toString(), 40 + colIndex * colWidth, rowY);
+      });
+      pdf.text(employee.totalHours.toString(), 40 + this.days.length * colWidth, rowY);
+
+      // Draw data borders
+      pdf.rect(20, rowY - rowHeight, colWidth * 2, rowHeight);
+      employee.times.forEach((_, colIndex) => {
+        pdf.rect(40 + colIndex * colWidth, rowY - rowHeight, colWidth, rowHeight);
+      });
+      pdf.rect(40 + this.days.length * colWidth, rowY - rowHeight, colWidth, rowHeight);
+
+    });
+
+    // Save the PDF
     pdf.save(`Timesheet_${this.selectedMonth}_${this.selectedYear}.pdf`);
 
   }
+
   saveData() {
     console.log("Data saved successfully");
   }
