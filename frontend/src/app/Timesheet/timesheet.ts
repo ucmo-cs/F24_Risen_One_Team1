@@ -158,11 +158,11 @@ export class TimesheetComponent implements OnInit {
 
     // Add title
     pdf.setFontSize(20);
-    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 10, 10);
+    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 20, 20);
 
     // Add project name
     pdf.setFontSize(14);
-    pdf.text('Project: ' + this.selectedProjectName, 10, 20);
+    pdf.text('Project: ' + this.selectedProjectName, 30, 30);
     let startY = 30;
     startY += 10;
     // Add table header
@@ -174,7 +174,6 @@ export class TimesheetComponent implements OnInit {
     // Move to the next line
     startY += 20;
 
-
     // Add employee data
     this.employees.forEach(employee => {
         let employeeData = [
@@ -184,11 +183,12 @@ export class TimesheetComponent implements OnInit {
         ];
         pdf.text(employeeData, 10, startY);
         startY += 10;
-            pdf.save(`Timesheet_${this.selectedMonth}_${this.selectedYear}.pdf`);
             console.log('PDF saved');
           }
           ,)
-      }
+    pdf.save(`Timesheet_${this.selectedMonth}_${this.selectedYear}.pdf`);
+
+  }
   saveData() {
     console.log("Data saved successfully");
   }
