@@ -100,7 +100,9 @@ export class TimesheetComponent implements OnInit {
         this.monthInt = 0;
     }
 
-    const body = {projectId: 111};
+    console.log(this.selectedProjectID);
+    const body = { projectId: this.selectedProjectID };
+    console.log(body);
 
     fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/readDB', {
       method: 'POST',
@@ -124,13 +126,18 @@ export class TimesheetComponent implements OnInit {
         console.error('Error fetching data', error);
       });
   }
+  getProjectNameById(projectID: number): string {
+    const project = this.projects.find(project => project.projectId === projectID);
+    return project ? project.projectName : 'Unknown Project';
+  }
 
   onProjectChange(projectID: number) {
-    const selectedProject = this.projects.find(project => project.projectId === projectID);
-    if (selectedProject) {
-      this.selectedProjectName = selectedProject.projectName;
-      this.selectedProjectID = selectedProject.projectId;
-    }
+    this.selectedProjectID = Number(projectID);
+    this.selectedMonth ='';
+    this.selectedProjectName = this.getProjectNameById(this.selectedProjectID);
+    console.log("Selected projectName "+this.selectedProjectName);
+    console.log("Selected projectID "+this.selectedProjectID);
+    //this.fetchData(); // Fetch data for the selected project
   }
 
   updateDays() {
@@ -202,10 +209,9 @@ export class TimesheetComponent implements OnInit {
       pdf.rect(40 + this.days.length * colWidth, rowY - rowHeight, colWidth, rowHeight);
 
     });
-
+    console.log("Project Name "+this.selectedProjectName)
     // Save the PDF
-    pdf.save(`Timesheet_${this.selectedMonth}_${this.selectedYear}.pdf`);
-
+    pdf.save(`Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.pdf`);
   }
 
   saveData() {

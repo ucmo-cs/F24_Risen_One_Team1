@@ -32,7 +32,12 @@
     </div>
 
     <div class="table-container">
-      <table *ngIf="days.length > 0">
+      <table>
+        <colgroup>
+          <col class="first-column">
+          <col *ngFor="let day of days" class="other-columns" > 0>
+          <col class="total-column">
+        </colgroup>
         <thead>
         <tr>
           <th>Employees</th>
