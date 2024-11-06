@@ -169,7 +169,7 @@ export class TimesheetComponent implements OnInit {
     pdf.setFontSize(12);
     let row = ['Employee Name', ...this.days, 'Total Hours'];
     let colWidth = pdf.internal.pageSize.getWidth() / (row.length + 1);
-    pdf.text(row, 10, startY);
+    pdf.text(row, colWidth, startY);
 
     // Move to the next line
     startY += 20;
