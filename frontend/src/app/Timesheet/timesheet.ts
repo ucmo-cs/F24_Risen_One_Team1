@@ -182,14 +182,14 @@ export class TimesheetComponent implements OnInit {
     this.days.forEach((day, index) => {
       pdf.text(day, 40 + index * colWidth, startY);
     });
-    pdf.text('Total', 40 + this.days.length * colWidth, startY);
+    pdf.text('Total', 60 + this.days.length * colWidth, startY);
 
     // Draw header borders
-    pdf.rect(20, startY - rowHeight, colWidth * 2, rowHeight);
+    pdf.rect(40, startY - rowHeight, colWidth * 2, rowHeight);
     this.days.forEach((_, index) => {
-      pdf.rect(40 + index * colWidth, startY - rowHeight, colWidth, rowHeight);
+      pdf.rect( 40+ index * colWidth, startY - rowHeight, colWidth, rowHeight);
     });
-    pdf.rect(40 + this.days.length * colWidth, startY - rowHeight, colWidth, rowHeight);
+    pdf.rect(60 + this.days.length * colWidth, startY - rowHeight, colWidth, rowHeight);
 
 
     // Add table data

@@ -1,13 +1,4 @@
-.header {
-  background-color: #f4ede9;
-  padding: 20px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 24px;
-  color: #333;
-  border: #f4ede9;
-
-}
+/* General styles */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -20,6 +11,16 @@ body {
   text-align: center;
 }
 
+.header {
+  background-color: #f4ede9;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: #333;
+  border: #f4ede9;
+}
+
 .timesheet {
   background-color: #ffffff;
   padding: 20px;
@@ -28,55 +29,74 @@ body {
   margin: 20px 0;
 }
 
-
-.project{
-  justify-content: space-evenly;
-}
-
+/* Table styles */
 .table-container {
-  overflow-x: visible; /* Remove horizontal scrolling */
+  overflow-x: visible;
   margin-top: 10px;
 }
 
 table {
-  width: 100%; /* Ensure the table takes up the full width */
-  table-layout: fixed; /* Distribute columns evenly */
-  border-collapse: collapse; /* Ensure borders are collapsed */
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
 table td input {
-  border: none; /* Remove the border */
-  outline: none; /* Remove the outline when focused */
-  /*width: 100%; /* Make the input take the full width of the cell */
-  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  border: none;
+  outline: none;
+  box-sizing: border-box;
 }
 
 table th, table td {
-  white-space: nowrap; /* Prevent text wrapping */
-  border: 1px solid #ddd; /* Keep the current border design */
-  padding: 8px; /* Add padding for better readability */
+  white-space: nowrap;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 table th {
-  background-color: #f2f2f2; /* Keep the current header background color */
+  background-color: #f2f2f2;
 }
 
 .first-column {
-  width: 20%; /* Adjust the width as needed */
+  width: 20%;
 }
 
 .other-columns {
-  width: 2.5%; /* Adjust the width as needed */
+  width: 2.5%;
 }
 
 .total-column {
-  width: 5%; /* Adjust the width as needed */
+  width: 5%;
+}
+
+/* Project fields and actions */
+.project-fields-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space items evenly */
+  padding: 20px;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-fields label {
+  font-weight: normal;
+  margin-right: 5px;
+}
+
+.project-fields select {
+  padding: 5px;
+  font-size: 14px;
 }
 
 /* Buttons */
 .actions {
-  position: absolute;
-  display: inline;
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -85,12 +105,10 @@ table th {
   color: white;
   padding: 10px 20px;
   border: none;
-  margin: 0 5px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  display: inline;
-
+  display: inline-block;
 }
 
 .actions button:hover {
@@ -100,8 +118,8 @@ table th {
 /* Footer signature */
 .footer {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
-  padding-left: 10px; /* Adjust padding as needed for spacing from the edge */
+  justify-content: flex-start;
+  padding-left: 10px;
 }
 
 .sign {
@@ -109,29 +127,11 @@ table th {
   gap: 40px;
   font-weight: bold;
 }
+
 .sign span {
   width: 150px;
   border-bottom: 0.1em solid #000;
   display: inline-block;
   margin-right: 18px;
   text-align: center;
-}
-
-/*New stuff*/
-.project-fields {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Align items to the left */
-  gap: 20px; /* Controls space between Project Name and Select Month */
-  padding-left: 20px; /* Adds some space from the left edge */
-}
-
-.project-fields label {
-  font-weight: normal;
-  margin-right: 5px; /* Adds a small space between label and select */
-}
-
-.project-fields select {
-  padding: 5px;
-  font-size: 14px;
 }

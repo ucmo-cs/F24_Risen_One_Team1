@@ -4,14 +4,8 @@
   <div class="timesheet">
     <div class="form-section">
       <div class="container"><strong>Monthly Timesheet</strong></div>
-      <div class="actions">
-        <button (click)="exportToPDF()">Export to PDF</button>
-        <button class="edit">Edit</button>
-        <button class >Save</button>
-      </div>
-      <br><br><br>
-
-      <div class="project-fields">
+<br>
+      <div class="project-fields-actions">
         <div class="project">
           <label for="project">Project Name:</label>
           <select id="project" [(ngModel)]="selectedProjectID" (ngModelChange)="onProjectChange($event)">
@@ -23,8 +17,14 @@
             <option *ngFor="let month of months" [value]="month">{{ month }}</option>
           </select>
         </div>
-        <br><br>
+        <div class="actions">
+          <button (click)="exportToPDF()">Export to PDF</button>
+          <button class="edit">Edit</button>
+          <button class="Save">Save</button>
+        </div>
       </div>
+
+      <br><br><br>
 
       <div>
         <strong>Selected Month:</strong> {{ selectedMonth ? selectedMonth : 'None selected' }}
@@ -35,7 +35,7 @@
       <table>
         <colgroup>
           <col class="first-column">
-          <col *ngFor="let day of days" class="other-columns" > 0>
+          <col *ngFor="let day of days" class="other-columns">
           <col class="total-column">
         </colgroup>
         <thead>
