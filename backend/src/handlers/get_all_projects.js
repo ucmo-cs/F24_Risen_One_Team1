@@ -6,14 +6,15 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 module.exports.handler = async (event) => {
     const params = {
         TableName: process.env.PROJECT_TABLE,
-        ProjectionExpression: 'projectId, projectName'
+        ProjectionExpression: 'projectId, projectName, employees'
     };
 
     try{
         const data = await dynamoDB.scan(params).promise();
         const projects = data.Items.map(item => ({
             projectId: item.projectId,
-            projectName: item.projectName
+            projectName: item.projectName,
+            employees: item.employees
         }));
 
         return{
