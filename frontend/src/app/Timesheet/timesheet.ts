@@ -5,6 +5,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import fedHolidays from "@18f/us-federal-holidays";
+import { Router } from '@angular/router';
+import {AuthService} from '../auth.service';
 
 interface Employee {
   name: string;
@@ -33,13 +35,31 @@ export class TimesheetComponent implements OnInit {
   selectedYear: string = ''; // Default year
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   years: string[] = [];
+  user: string = '';
+  signOffName: string = '';
+  signOffDate: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.user = user.username; // Assuming 'username' is the specific value you want
+    }
     this.fetchProjects();
     this.initializeYears();
+  }
+
+  resetData() {
+    this.signOffName = '';
+    this.signOffDate = '';
+    this.employees = [];
+    this.days = [];
   }
 
   initializeYears() {
@@ -50,6 +70,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   updateYear(year: string) {
+    this.resetData();
     this.selectedYear = year;
     this.selectedMonth = '';
   }
@@ -73,6 +94,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   fetchData() {
+    this.resetData();
     switch (this.selectedMonth) {
       case 'January':
         this.monthInt = 1;
@@ -129,6 +151,9 @@ export class TimesheetComponent implements OnInit {
       .then(data => {
         const timesheetData = data.data.years[this.selectedYear][this.monthInt];
         console.log(timesheetData);
+        this.signOffName = data.data.signOff.managerName;
+        this.signOffDate = data.data.signOff.signDate;
+        console.log(this.signOffName + ' ' + this.signOffDate);
         this.employees = timesheetData.map((employee: any) => ({
           ...employee,
           totalHours: employee.times.reduce((sum: number, hours: number) => sum + hours, 0)
@@ -145,6 +170,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   onProjectChange(projectID: number) {
+    this.resetData();
     this.selectedProjectID = Number(projectID);
     this.selectedMonth ='';
     this.selectedYear = '';

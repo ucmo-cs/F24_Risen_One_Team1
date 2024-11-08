@@ -39,7 +39,8 @@
     </div>
 
     <div class="table-container">
-      <table>
+      <p *ngIf="employees.length === 0">There are no employees to display.</p>
+      <table *ngIf="employees.length > 0">
         <colgroup>
           <col class="first-column">
           <col *ngFor="let day of days" class="other-columns">
@@ -74,7 +75,7 @@
 
     <div class="footer">
       <div class="sign">
-        Signature:<span></span>Date:<span></span>
+        Signature:<span>{{signOffName}}</span>Date:<span>{{signOffDate}}</span>
       </div>
     </div>
   </div>
