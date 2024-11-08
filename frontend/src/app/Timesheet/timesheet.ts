@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import fedHolidays from "@18f/us-federal-holidays";
 
 interface Employee {
   name: string;
@@ -57,7 +58,6 @@ export class TimesheetComponent implements OnInit {
       });
   }
 
-
   fetchData() {
     switch (this.selectedMonth) {
       case 'January':
@@ -110,7 +110,6 @@ export class TimesheetComponent implements OnInit {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-      mode: 'cors',
     })
       .then(response => response.json())
       .then(data => {
@@ -141,8 +140,20 @@ export class TimesheetComponent implements OnInit {
   }
 
   updateDays() {
+    const options = { shiftSaturdayHolidays: true, shiftSundayHolidays: true };
+    const holidays = fedHolidays.allForYear(Number(this.selectedYear), options);
     const daysInMonth = new Date(parseInt(this.selectedYear), this.monthInt, 0).getDate();
-    this.days = Array.from({length: daysInMonth}, (_, i) => `${i + 1}`);
+    this.days = [];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(parseInt(this.selectedYear), this.monthInt - 1, day);
+      const dayOfWeek = date.getDay();
+      const dateString = date.toISOString().split('T')[0];
+
+      if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.some(holiday => holiday.dateString === dateString)) {
+        this.days.push(`${day}`);
+      }
+    }
   }
 
   validateInput(event: any, employeeIndex: number, dayIndex: number) {
