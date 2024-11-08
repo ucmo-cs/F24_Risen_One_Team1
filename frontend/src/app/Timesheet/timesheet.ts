@@ -30,14 +30,28 @@ export class TimesheetComponent implements OnInit {
   selectedProjectName: string = '';
   selectedProjectID: number = 0;
   selectedMonth: string = '';
-  selectedYear: string = '2024'; // Default year
+  selectedYear: string = ''; // Default year
   months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  years: string[] = [];
 
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
     this.fetchProjects();
+    this.initializeYears();
+  }
+
+  initializeYears() {
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+      this.years.push(year.toString());
+    }
+  }
+
+  updateYear(year: string) {
+    this.selectedYear = year;
+    this.selectedMonth = '';
   }
 
   fetchProjects() {
@@ -133,6 +147,7 @@ export class TimesheetComponent implements OnInit {
   onProjectChange(projectID: number) {
     this.selectedProjectID = Number(projectID);
     this.selectedMonth ='';
+    this.selectedYear = '';
     this.selectedProjectName = this.getProjectNameById(this.selectedProjectID);
     console.log("Selected projectName "+this.selectedProjectName);
     console.log("Selected projectID "+this.selectedProjectID);

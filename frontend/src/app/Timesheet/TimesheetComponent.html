@@ -12,10 +12,17 @@
             <option *ngFor="let project of projects" [value]="project.projectId">{{ project.projectName }}</option>
           </select>
 
+          <label for="selectYear">Select Year:</label>
+          <select id="selectYear" [(ngModel)]="selectedYear" (ngModelChange)="updateYear($event)">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+
           <label for="selectMonth">Select Month:</label>
           <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="fetchData()">
             <option *ngFor="let month of months" [value]="month">{{ month }}</option>
           </select>
+
+
         </div>
         <div class="actions">
           <button (click)="exportToPDF()">Export to PDF</button>
