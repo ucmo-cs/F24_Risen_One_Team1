@@ -27,7 +27,7 @@
         <div class="actions">
           <button (click)="exportToPDF()">Export to PDF</button>
           <button class="edit">Edit</button>
-          <button class="Save">Save</button>
+          <button class="Save" (click)="saveData()">Save</button>
         </div>
       </div>
 
@@ -73,8 +73,8 @@
 
     <br><br>
 
-    <div class="footer">
-      <div class="sign">
+    <div class="footer" >
+      <div class="sign" *ngIf="employees.length > 0">
         Signature:<span>{{signOffName}}</span>Date:<span>{{signOffDate}}</span>
       </div>
     </div>
