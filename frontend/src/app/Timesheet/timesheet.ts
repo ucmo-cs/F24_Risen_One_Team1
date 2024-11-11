@@ -287,7 +287,44 @@ export class TimesheetComponent implements OnInit {
   }
 
   saveData() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = today.getFullYear();
 
+    const body = {
+      projectId: this.selectedProjectID,
+      year: this.selectedYear,
+      month: this.monthInt,
+      data: this.employees,
+      signOff: {
+        managerName: this.user,
+        signDate: `${month}-${day}-${year}`
+      }
+    };
+    console.log("Body "+body);
+    // fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/writeDB', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(body),
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error saving data', error);
+    //
+    //   });
+    console.log("Raw body " + JSON.stringify(body));
+    console.log("Raw data ");
+    console.log("Employees" + this.employees);
+    console.log("Project Name "+this.selectedProjectName);
+    console.log("Project ID "+this.selectedProjectID);
+    console.log("Month "+this.selectedMonth);
+    console.log("Year "+this.selectedYear);
     console.log("Data saved successfully");
   }
 }
