@@ -19,7 +19,7 @@
         </div>
         <div class="actions">
           <button (click)="exportToPDF()">Export to PDF</button>
-          <button class="edit">Edit</button>
+          <button (click)="Edit()">Edit</button>
           <button class="Save">Save</button>
         </div>
       </div>
@@ -46,20 +46,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let employee of employees; let employeeIndex = index">
-          <td>{{ employee.name }}</td>
-          <td *ngFor="let day of days; let dayIndex = index">
-            <input
-              type="number"
-              [(ngModel)]="employee.times[dayIndex]"
-              (input)="validateInput($event, employeeIndex, dayIndex)"
-              min="0"
-              max="24"
-              placeholder="Hours">
-          </td>
-          <td>{{ employee.totalHours }}</td>
-        </tr>
-        </tbody>
+      <tr *ngFor="let employee of employees; let employeeIndex = index">
+        <td>{{ employee.name }}</td>
+        <td *ngFor="let day of days; let dayIndex = index">
+          <input
+            type="number"
+            [(ngModel)]="employee.times[dayIndex]"
+            readonly
+            min="0"
+            max="24"
+            placeholder="Hours">
+        </td>
+        <td>{{ employee.totalHours }}</td>
+      </tr>
+      </tbody>
+
       </table>
     </div>
 
