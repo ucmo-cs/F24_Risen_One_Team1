@@ -38,6 +38,7 @@ export class TimesheetComponent implements OnInit {
   user: string = '';
   signOffName: string = '';
   signOffDate: string = '';
+  isEditMode: boolean = false;
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
@@ -234,9 +235,14 @@ export class TimesheetComponent implements OnInit {
     }
   }
 
-  Edit(){
 
+
+  Edit() {
+    this.isEditMode = !this.isEditMode;
+    console.log(`Edit mode: ${this.isEditMode ? 'Enabled' : 'Disabled'}`);
   }
+
+
 
   saveData() {
     const today = new Date();
@@ -280,3 +286,4 @@ export class TimesheetComponent implements OnInit {
     console.log("Data saved successfully");
   }
 }
+
