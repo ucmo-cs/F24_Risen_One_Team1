@@ -38,6 +38,7 @@ export class TimesheetComponent implements OnInit {
   user: string = '';
   signOffName: string = '';
   signOffDate: string = '';
+  isEditMode: boolean = false;
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
@@ -216,75 +217,32 @@ export class TimesheetComponent implements OnInit {
   }
 
   exportToPDF() {
-  //   const element = document.querySelector('.timesheet') as HTMLElement; // Select the element you want to capture
-  //
-  //   if(element){
-  //     html2canvas(element).then(canvas => {
-  //       const imgData = canvas.toDataURL('image/png');
-  //       const pdf = new jsPDF('p', 'mm', 'a4');
-  //       const imgProps = pdf.getImageProperties(imgData);
-  //       const pdfWidth = pdf.internal.pageSize.getWidth();
-  //       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-  //
-  //       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  //       pdf.save(`Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.pdf`);
-  //     }).catch(error => {
-  //       console.error('Error capturing the page', error);
-  //     });
-  //   }
-  // }
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const element = document.querySelector('.timesheet') as HTMLElement; // Select the element you want to capture
 
-    // Add title
-    pdf.setFontSize(20);
-    pdf.text('Timesheet for ' + this.selectedMonth + ' ' + this.selectedYear, 20, 10);
+    if(element){
+      html2canvas(element).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-    // Add project name
-    pdf.setFontSize(14);
-    pdf.text('Project: ' + this.selectedProjectName, 20, 20);
-
-    // Set starting position for the table
-    let startY = 30
-    const rowHeight = 5;
-    const colWidth = 5;
-
-    // Add table headers
-    pdf.setFontSize(10);
-    pdf.text('Name', 20, startY);
-    this.days.forEach((day, index) => {
-      pdf.text(day, 40 + index * colWidth, startY);
-    });
-    pdf.text('Total', 60 + this.days.length * colWidth, startY);
-
-    // Draw header borders
-    // pdf.rect(40, startY - rowHeight, colWidth * 2, rowHeight);
-    // this.days.forEach((_, index) => {
-    //   pdf.rect( 40+ index * colWidth, startY - rowHeight, colWidth, rowHeight);
-    // });
-    // pdf.rect(60 + this.days.length * colWidth, startY - rowHeight, colWidth, rowHeight);
-
-
-    // Add table data
-    this.employees.forEach((employee, rowIndex) => {
-      const rowY = startY + (rowIndex + 1) * rowHeight;
-      pdf.text(employee.name, 20, rowY);
-      employee.times.forEach((time, colIndex) => {
-        pdf.text(time.toString(), 40 + colIndex * colWidth, rowY);
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.pdf`);
+      }).catch(error => {
+        console.error('Error capturing the page', error);
       });
-      pdf.text(employee.totalHours.toString(), 40 + this.days.length * colWidth, rowY);
-
-      // Draw data borders
-      // pdf.rect(20, rowY - rowHeight, colWidth * 2, rowHeight);
-      // employee.times.forEach((_, colIndex) => {
-      //   pdf.rect(40 + colIndex * colWidth, rowY - rowHeight, colWidth, rowHeight);
-      // });
-      // pdf.rect(40 + this.days.length * colWidth, rowY - rowHeight, colWidth, rowHeight);
-
-    });
-    console.log("Project Name "+this.selectedProjectName)
-    // Save the PDF
-    pdf.save(`Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.pdf`);
+    }
   }
+
+
+
+  Edit() {
+    this.isEditMode = !this.isEditMode;
+    console.log(`Edit mode: ${this.isEditMode ? 'Enabled' : 'Disabled'}`);
+  }
+
+
 
   saveData() {
     const today = new Date();
@@ -303,21 +261,24 @@ export class TimesheetComponent implements OnInit {
       }
     };
     console.log("Body "+body);
-    // fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/writeDB', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error saving data', error);
-    //
-    //   });
+    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/updateFunction', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTimeout(() => {
+          this.fetchData();
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Error saving data', error);
+
+      });
     console.log("Raw body " + JSON.stringify(body));
     console.log("Raw data ");
     console.log("Employees" + this.employees);
@@ -326,5 +287,27 @@ export class TimesheetComponent implements OnInit {
     console.log("Month "+this.selectedMonth);
     console.log("Year "+this.selectedYear);
     console.log("Data saved successfully");
+
+  }
+
+  exportToCSV() {
+    const rows = [];
+    const headers = ['Employees', ...this.days, 'Total'];
+    rows.push(headers.join(','));
+
+    this.employees.forEach(employee => {
+      const row = [employee.name, ...employee.times, employee.totalHours];
+      rows.push(row.join(','));
+    });
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + rows.join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
+
