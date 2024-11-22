@@ -296,7 +296,7 @@ export class TimesheetComponent implements OnInit {
     rows.push(headers.join(','));
 
     this.employees.forEach(employee => {
-      const row = [employee.name, ...employee.times, employee.totalHours];
+      const row = [employee.name, ...employee.times.slice(0, this.days.length), employee.totalHours];
       rows.push(row.join(','));
     });
 
