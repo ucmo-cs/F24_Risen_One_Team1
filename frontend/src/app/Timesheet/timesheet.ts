@@ -261,21 +261,24 @@ export class TimesheetComponent implements OnInit {
       }
     };
     console.log("Body "+body);
-    // fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/writeDB', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error saving data', error);
-    //
-    //   });
+    fetch('https://aytgdj4r8d.execute-api.us-east-1.amazonaws.com/BackToStart/updateFunction', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTimeout(() => {
+          this.fetchData();
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Error saving data', error);
+
+      });
     console.log("Raw body " + JSON.stringify(body));
     console.log("Raw data ");
     console.log("Employees" + this.employees);
@@ -284,6 +287,27 @@ export class TimesheetComponent implements OnInit {
     console.log("Month "+this.selectedMonth);
     console.log("Year "+this.selectedYear);
     console.log("Data saved successfully");
+
+  }
+
+  exportToCSV() {
+    const rows = [];
+    const headers = ['Employees', ...this.days, 'Total'];
+    rows.push(headers.join(','));
+
+    this.employees.forEach(employee => {
+      const row = [employee.name, ...employee.times, employee.totalHours];
+      rows.push(row.join(','));
+    });
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + rows.join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Timesheet_${this.selectedProjectName}_${this.selectedMonth}_${this.selectedYear}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
 

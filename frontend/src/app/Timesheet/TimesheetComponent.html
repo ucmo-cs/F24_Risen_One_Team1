@@ -25,6 +25,7 @@
 
         </div>
         <div class="actions">
+          <button (click)="exportToCSV()">Export to CSV</button>
           <button (click)="exportToPDF()">Export to PDF</button>
           <button (click)="Edit()" class="edit">{{ isEditMode ? 'Cancel Edit' : 'Edit' }}</button>
           <button (click)="saveData()" class="Save">Save</button>
