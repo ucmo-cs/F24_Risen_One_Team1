@@ -95,9 +95,12 @@ table th {
 
 /* Buttons */
 .actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 20px;
+
 }
 
 .actions button {
@@ -109,6 +112,7 @@ table th {
   cursor: pointer;
   font-size: 14px;
   display: inline-block;
+  height: 35pt;
 }
 
 .actions button:hover {
