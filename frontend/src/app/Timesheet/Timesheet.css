@@ -1,0 +1,141 @@
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f0ec;
+}
+
+.container {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.header {
+  background-color: #f4ede9;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: #333;
+  border: #f4ede9;
+}
+
+.timesheet {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: visible;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+table td input {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+table th, table td {
+  white-space: nowrap;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+.first-column {
+  width: 20%;
+}
+
+.other-columns {
+  width: 2.5%;
+}
+
+.total-column {
+  width: 5%;
+}
+
+/* Project fields and actions */
+.project-fields-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space items evenly */
+  padding: 20px;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-fields label {
+  font-weight: normal;
+  margin-right: 5px;
+}
+
+.project-fields select {
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* Buttons */
+.actions {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 20px;
+
+}
+
+.actions button {
+  background-color: #ffba00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+  height: 35pt;
+}
+
+.actions button:hover {
+  opacity: 0.8;
+}
+
+/* Footer signature */
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.sign {
+  display: flex;
+  gap: 40px;
+  font-weight: bold;
+}
+
+.sign span {
+  width: 150px;
+  border-bottom: 0.1em solid #000;
+  display: inline-block;
+  margin-right: 18px;
+  text-align: center;
+}

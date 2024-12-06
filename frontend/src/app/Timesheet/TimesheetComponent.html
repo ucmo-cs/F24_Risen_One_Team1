@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="header">Monthly Timesheet</div>
+
+  <div class="timesheet">
+    <div class="form-section">
+      <div class="container"><strong>Monthly Timesheet</strong></div>
+<br>
+      <div class="project-fields-actions">
+        <div class="project">
+          <label for="project">Project Name:</label>
+          <select id="project" [(ngModel)]="selectedProjectID" (ngModelChange)="onProjectChange($event)">
+            <option *ngFor="let project of projects" [value]="project.projectId">{{ project.projectName }}</option>
+          </select>
+
+          <label for="selectYear">Select Year:</label>
+          <select id="selectYear" [(ngModel)]="selectedYear" (ngModelChange)="updateYear($event)">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+
+          <label for="selectMonth">Select Month:</label>
+          <select id="selectMonth" [(ngModel)]="selectedMonth" (ngModelChange)="fetchData()">
+            <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+          </select>
+
+
+        </div>
+        <div class="actions">
+          <button (click)="exportToCSV()">Export to CSV</button>
+          <button (click)="exportToPDF()">Export to PDF</button>
+          <button (click)="Edit()" class="edit">{{ isEditMode ? 'Cancel Edit' : 'Edit' }}</button>
+          <button (click)="saveData()" class="Save">Save</button>
+        </div>
+      </div>
+
+      <br><br><br>
+
+      <div>
+        <strong>Selected Month:</strong> {{ selectedMonth ? selectedMonth : 'None selected' }}
+      </div>
+    </div>
+
+    <div class="table-container">
+      <p *ngIf="employees.length === 0">There are no employees to display.</p>
+      <table *ngIf="employees.length > 0">
+        <colgroup>
+          <col class="first-column">
+          <col *ngFor="let day of days" class="other-columns">
+          <col class="total-column">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>Employees</th>
+          <th *ngFor="let day of days">{{ day }}</th>
+          <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+      <tr *ngFor="let employee of employees; let employeeIndex = index">
+        <td>{{ employee.name }}</td>
+        <td *ngFor="let day of days; let dayIndex = index">
+
+          <input
+            type="number"
+            [(ngModel)]="employee.times[dayIndex]"
+            [readonly]="!isEditMode"
+            [ngClass]="{ 'editable': isEditMode }"
+            min="0"
+            max="24"
+            placeholder="Hours">
+        </td>
+        <td>{{ employee.totalHours }}</td>
+      </tr>
+      </tbody>
+
+      </table>
+    </div>
+
+    <br><br>
+
+    <div class="footer" >
+      <div class="sign" *ngIf="employees.length > 0">
+        Signature:<span>{{signOffName}}</span>Date:<span>{{signOffDate}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@18f/us-federal-holidays": "^4.0.0",
     "@angular/animations": "^18.2.3",
     "@angular/common": "^18.2.3",
     "@angular/compiler": "^18.2.3",
@@ -19,8 +20,14 @@
     "@angular/platform-browser": "^18.2.3",
     "@angular/platform-browser-dynamic": "^18.2.3",
     "@angular/router": "^18.2.3",
+    "chart.js": "^4.4.5",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
+    "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
